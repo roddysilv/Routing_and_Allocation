@@ -43,9 +43,15 @@ int main(int argc, char *argv[])
 
     //print();
 
-    if(algContrutivo == 1){construtivoGuloso();}
-    if(algContrutivo == 2){construtivoGulosoRand();}
-    
+    if(algContrutivo == 1)
+    {
+        construtivoGuloso();
+    }
+    if(algContrutivo == 2)
+    {
+        construtivoGulosoRand();
+    }
+
     //cin.ignore();
 
     return 0;
