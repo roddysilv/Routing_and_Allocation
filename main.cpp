@@ -42,9 +42,9 @@ int main(int argc, char *argv[])
 
     //print();
 
-    construtivoGuloso();
+    //construtivoGuloso();
     construtivoGulosoRand();
-
+    
     //cin.ignore();
 
     return 0;
@@ -65,7 +65,6 @@ void twoOpt(vector<int> caminho)
                     continue;
                 }
                 vector<int> novoCaminho = swap(i,j,caminho);
-                //novoCaminho[i:j] = caminho[j - 1:i - 1:-1]
                 if ( custo(novoCaminho) < custo(caminho))
                 {
                     caminho = novoCaminho;
@@ -75,25 +74,27 @@ void twoOpt(vector<int> caminho)
         }
     }
 
-    for(int i =0; i< caminho.size(); i++)
-    {
-        cout << caminho[i] << " ";
-    }
-    cout << endl;
+    cout << "2opt: 0";
 
+    for(int i =1; i< caminho.size(); i++)
+    {
+        cout << "->" << caminho[i] ;
+    }
+    cout << " Novo custo: " << custo(caminho) << endl;
+    cout << endl;
 }
 
-vector<int> swap(int i, int j,vector<int> caminho)
+vector<int> swap(int a, int b,vector<int> caminho)
 {
     vector<int> aux;
-    for(int k = j ; k > i; k--)
+    for(int i = b ; i >= a; i--)
     {
-        aux.push_back(caminho[k]);
+        aux.push_back(caminho[i]);
     }
     int l = 0;
-    for(int k = i ; k <= j; k++)
+    for(int i = a ; i <= b; i++)
     {
-        caminho[i] = aux[j];
+        caminho[i] = aux[l];
         l++;
     }
     return caminho;
@@ -113,7 +114,7 @@ float custo(vector<int> caminho)
 void construtivoGuloso()
 {
     int noAtual,proxNo, auxCapacity, carros, trocasBat;
-    float custoMin, auxBat, custoRota;
+    float custoMin, auxBat, custoRota, custoTotal = 0;
 
     vector<int> nosVisitados;
     vector<int> caminho;
@@ -125,6 +126,8 @@ void construtivoGuloso()
     carros = 0;
     bool atualizado = true; // Booleano que verifica se há candidato para entrar na rota.
 
+    cout << "===================================================================================" << endl;
+    cout << "CONSTRUTIVO GULOSO" << endl;
     cout << "ROTAS:" << endl << endl;
     while(nosVisitados.size()<distancias.size()) // Enquanto todos os nós não forem visitados.
     {
@@ -179,15 +182,17 @@ void construtivoGuloso()
         cout << "Custo da rota: " << custoRota;
         cout << endl << endl;
         
+        custoTotal+=custoRota;
         caminho = {0}; // Ajusta caminho para o pŕoximo veículo
         noAtual = 0;
     }
+    cout << "Custo Total: " << custoTotal << endl << endl;
 }
 
 void construtivoGulosoRand(){
     srand(time(0));
     int noAtual,proxNo, auxCapacity, carros, trocasBat;
-    float custoMin, auxBat, custoRota;
+    float custoMin, auxBat, custoRota, custoTotal = 0;
 
     vector<int> nosVisitados;
     vector<int> caminho;
@@ -204,6 +209,8 @@ void construtivoGulosoRand(){
     carros = 0;
     bool atualizado = true; // Booleano que verifica se há candidato para entrar na rota.
 
+    cout << "===================================================================================" << endl;
+    cout << "CONSTRUTIVO GULOSO 'RANDOMICO' PURO" << endl;
     cout << "ROTAS:" << endl << endl;
     
     while(candidatos.size() > 0){
@@ -252,10 +259,92 @@ void construtivoGulosoRand(){
         cout << "Custo da rota: " << custoRota;
         cout << endl << endl;
         
+        twoOpt(caminho);
+
+        custoTotal+=custoRota;
         caminho = {0}; // Ajusta caminho para o pŕoximo veículo
         noAtual = 0;
     }
+    cout << "Custo Total: " << custoTotal << endl << endl;
 }
+
+/*void construtivoGulosoRandPARAMETRIZADO(){
+    srand(time(0));
+    int noAtual,proxNo, auxCapacity, carros, trocasBat;
+    float custoMin, auxBat, custoRota, custoTotal = 0;
+
+    vector<int> nosVisitados;
+    vector<int> caminho;
+    vector<int> candidatos;
+
+    for(int i = 1; i < nodeCount; i++){
+        candidatos.push_back(i);
+    }
+    
+    noAtual = nodeBase;
+    nosVisitados.push_back(noAtual);
+    caminho.push_back(noAtual);
+
+    carros = 0;
+    bool atualizado = true; // Booleano que verifica se há candidato para entrar na rota.
+
+    cout << "===================================================================================" << endl;
+    cout << "CONSTRUTIVO GULOSO 'RANDOMICO' PURO" << endl;
+    cout << "ROTAS:" << endl << endl;
+    
+    while(candidatos.size() > 0){
+        custoRota = 0;
+        trocasBat = 0;
+        auxCapacity = vehicleCapacity;
+        auxBat = batteryCapacity;
+        carros++;
+        cout <<"Rota carro #" << carros << ": " << noAtual;
+
+        int maxIt =0;
+        while(auxCapacity > 0 && maxIt < 20 && candidatos.size() > 0) // Enquanto o veículo não está cheio (a cada iteração é diminuida a capacidade de carga de acordo com a demanda do cliente).
+        {
+            int random = rand() % candidatos.size();
+            int rNo = candidatos[random];
+            //cout << random <<" "<< rNo<< endl;
+            // Verifica se a capacidade do veículo não foi excedida.
+            if( auxCapacity - nodeDemands[rNo] >= 0)
+            {
+                custoRota += distancias[noAtual][rNo];
+                candidatos.erase(candidatos.begin() + random);
+                atualizado = true;
+
+                if(auxBat-distancias[noAtual][rNo] < 0 ) // Troca de bateria.
+                {
+                    trocasBat++;
+                    auxBat = batteryCapacity;
+                }   
+
+                auxBat -= distancias[noAtual][rNo];
+                noAtual = rNo; // Atualiza nó.
+                auxCapacity -= nodeDemands[rNo];
+                custoRota += custoMin;
+                nosVisitados.push_back(noAtual);
+                caminho.push_back(noAtual);
+                cout << "->" << noAtual;
+            }
+            maxIt++;
+        }
+        
+        saveFile(carros, caminho, "GulosoRand"); // Salva caminho percorrido pelo veículo.
+        
+        cout << endl << "Capacidade restante: " << auxCapacity << endl;
+        cout << "Trocas de bateria: " << trocasBat << endl;
+        cout << "Capacidade restante da bateria atual: " << auxBat<<endl;
+        cout << "Custo da rota: " << custoRota;
+        cout << endl << endl;
+        
+        custoTotal+=custoRota;
+        caminho = {0}; // Ajusta caminho para o pŕoximo veículo
+        noAtual = 0;
+    }
+    cout << "Custo Total: " << custoTotal << endl << endl;
+}*/
+
 void leitura(ifstream &input_file)
 {
     string line;
