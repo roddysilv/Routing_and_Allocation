@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-vector<vector<float>> matrix;
+vector<vector<float>> distancias;
 vector<pair<int, int>> nodeCoords;
 vector<pair<int, int>> bssCoords;
 vector<int> nodeDemands;
@@ -101,7 +101,7 @@ float custo(vector<int> caminho)
 
     for(int i = 0; i< caminho.size()-1; i++)
     {
-        custoRota += matrix[caminho[i]][caminho[i+1]];
+        custoRota += distancias[caminho[i]][caminho[i+1]];
     }
     return custoRota;
 }
@@ -109,7 +109,7 @@ float custo(vector<int> caminho)
 void construtivoGuloso()
 {
     int noAtual,proxNo, auxCapacity, carros, trocasBat;
-    float min, auxBat, custoRota;
+    float custoMin, auxBat, custoRota;
 
     vector<int> nosVisitados;
     vector<int> caminho;
@@ -119,9 +119,10 @@ void construtivoGuloso()
     caminho.push_back(noAtual);
 
     carros = 0;
+    bool atualizado = true; // Booleano que verifica se há candidato para entrar na rota.
 
     cout << "ROTAS:" << endl << endl;
-    while(nosVisitados.size()<matrix.size()) // Enquanto todos os nós não forem visitados.
+    while(nosVisitados.size()<distancias.size()) // Enquanto todos os nós não forem visitados.
     {
         custoRota = 0;
         trocasBat = 0;
@@ -132,45 +133,117 @@ void construtivoGuloso()
 
         while(auxCapacity > 0) // Enquanto o veículo não está cheio (a cada iteração é diminuida a capacidade de carga de acordo com a demanda do cliente).
         {
-            bool test = 0;
-            min = batteryCapacity*2;
-            for(int j = 0 ; j < matrix.size(); j++)
+            atualizado = false;
+            custoMin = batteryCapacity;
+            for(int j = 0 ; j < distancias.size(); j++)
             {
-                if( matrix[noAtual][j] < min && noAtual != j && find(nosVisitados.begin(), nosVisitados.end(), j) == nosVisitados.end()
-                        && auxCapacity - nodeDemands[j] >= 0 && batteryCapacity - matrix[noAtual][j]>= 0)
+                // Verifica se a distancia para p proximo cliente é menor, se o nó verificado não é o msmo, se o nó verificado já foi visitado, e se a capacidade do veículo não foi excedida.
+                if( distancias[noAtual][j] < custoMin && noAtual != j && find(nosVisitados.begin(), nosVisitados.end(), j) == nosVisitados.end()
+                        && auxCapacity - nodeDemands[j] >= 0)
                 {
-                    min = matrix[noAtual][j];
+                    custoMin = distancias[noAtual][j];
                     proxNo = j;
-                    test = 1;
+                    atualizado = true;
                 }
             }
-            if(test==0)
+
+            if(atualizado==false) // Não encontrou próximo cliente que satisfaça as condições.
             {
-                break;
+                break; // Para o algorítmo e não adiciona mais clientes na rota.
             }
-            if(auxBat-matrix[noAtual][proxNo] <0 )
+
+            if(auxBat-distancias[noAtual][proxNo] < 0 ) // Troca de bateria.
             {
                 trocasBat++;
                 auxBat = batteryCapacity;
             }
-            auxBat -= matrix[noAtual][proxNo];
-            noAtual = proxNo;
+
+            auxBat -= distancias[noAtual][proxNo];
+            noAtual = proxNo; // Atualiza nó.
             auxCapacity -= nodeDemands[proxNo];
-            custoRota += min;
+            custoRota += custoMin;
             nosVisitados.push_back(noAtual);
             caminho.push_back(noAtual);
             cout << "->" << noAtual;
         }
+        
+        saveFile(carros, caminho); // Salva caminho percorrido pelo veículo.
+        
         cout << endl << "Capacidade restante: " << auxCapacity << endl;
         cout << "Trocas de bateria: " << trocasBat << endl;
         cout << "Capacidade restante da bateria atual: " << auxBat<<endl;
         cout << "Custo da rota: " << custoRota;
         cout << endl << endl;
-        saveFile(carros, caminho);
-        caminho.clear();
-
+        
+        caminho = {0}; // Ajusta caminho para o pŕoximo veículo
         noAtual = 0;
-        caminho.push_back(noAtual);
+    }
+}
+
+void construtivoGulosoRand(){
+    int noAtual,proxNo, auxCapacity, carros, trocasBat;
+    float custoMin, auxBat, custoRota;
+
+    vector<int> nosVisitados;
+    vector<int> caminho;
+    vector<int> candidatos;
+
+    for(int i = 1; i < nodeCount; i++){
+        candidatos.push_back(i);
+    }
+    
+    noAtual = nodeBase;
+    nosVisitados.push_back(noAtual);
+    caminho.push_back(noAtual);
+
+    carros = 0;
+    bool atualizado = true; // Booleano que verifica se há candidato para entrar na rota.
+
+    cout << "ROTAS:" << endl << endl;
+    
+    while(candidatos.size() > 0){
+        custoRota = 0;
+        trocasBat = 0;
+        auxCapacity = vehicleCapacity;
+        auxBat = batteryCapacity;
+        carros++;
+        cout <<"Rota carro #" << carros << ": " << noAtual;
+
+        while(auxCapacity > 0) // Enquanto o veículo não está cheio (a cada iteração é diminuida a capacidade de carga de acordo com a demanda do cliente).
+        {
+            atualizado = false;
+            custoMin = batteryCapacity;
+            for(int j = 0 ; j < candidatos.size(); j++)
+            {
+                int random = rand() % candidatos.size();
+                int rNo = candidatos[random];
+                // Verifica se a capacidade do veículo não foi excedida.
+                if( auxCapacity - nodeDemands[rNo] >= 0)
+                {
+                    custoRota += distancias[noAtual][rNo];
+                    candidatos.erase(candidatos.begin() + random);
+                    atualizado = true;
+                    break;
+                }
+            }
+            if(atualizado==false) // Não encontrou próximo cliente que satisfaça as condições.
+            {
+                break; // Para o algorítmo e não adiciona mais clientes na rota.
+            }
+
+            if(auxBat-distancias[noAtual][proxNo] < 0 ) // Troca de bateria.
+            {
+                trocasBat++;
+                auxBat = batteryCapacity;
+            }
+
+            auxBat -= distancias[noAtual][proxNo];
+            noAtual = proxNo; // Atualiza nó.
+            auxCapacity -= nodeDemands[proxNo];
+            custoRota += custoMin;
+            nosVisitados.push_back(noAtual);
+            caminho.push_back(noAtual);
+            cout << "->" << noAtual;
     }
 }
 
@@ -330,7 +403,7 @@ void leitura(ifstream &input_file)
                 batteryCapacity = auxD;
             }
         }
-        matrix.push_back(auxV);
+        distancias.push_back(auxV);
     }
     batteryCapacity = 1.2 * batteryCapacity;
 }
@@ -354,11 +427,11 @@ float distance(int x1, int y1, int x2, int y2)
 
 void print()
 {
-    for(int i = 0 ; i < matrix.size(); i++)
+    for(int i = 0 ; i < distancias.size(); i++)
     {
-        for(int j = 0 ; j < matrix.size(); j++)
+        for(int j = 0 ; j < distancias.size(); j++)
         {
-            cout << matrix[i][j]<< " ";
+            cout << distancias[i][j]<< " ";
         }
         cout << endl;
     }
