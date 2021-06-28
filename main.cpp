@@ -14,7 +14,7 @@ int nodeCount, vehicleCapacity, nodeBase, bssCost, bssCount, vehiclesNeeded, tot
 float batteryCapacity;
 
 float distance(int x1, int y1, int x2, int y2);
-void saveFile(int carro, vector<int> caminho);
+void saveFile(int carro, vector<int> caminho, string algoritmo);
 void leitura(ifstream &input_file);
 void construtivoGuloso();
 void construtivoGulosoRand();
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     //print();
 
-    //construtivoGuloso();
+    construtivoGuloso();
     construtivoGulosoRand();
 
     //cin.ignore();
@@ -171,7 +171,7 @@ void construtivoGuloso()
             cout << "->" << noAtual;
         }
         
-        saveFile(carros, caminho); // Salva caminho percorrido pelo veículo.
+        saveFile(carros, caminho, "Guloso"); // Salva caminho percorrido pelo veículo.
         
         cout << endl << "Capacidade restante: " << auxCapacity << endl;
         cout << "Trocas de bateria: " << trocasBat << endl;
@@ -244,7 +244,7 @@ void construtivoGulosoRand(){
             maxIt++;
         }
         
-        saveFile(carros, caminho); // Salva caminho percorrido pelo veículo.
+        saveFile(carros, caminho, "GulosoRand"); // Salva caminho percorrido pelo veículo.
         
         cout << endl << "Capacidade restante: " << auxCapacity << endl;
         cout << "Trocas de bateria: " << trocasBat << endl;
@@ -417,9 +417,9 @@ void leitura(ifstream &input_file)
     batteryCapacity = 1.2 * batteryCapacity;
 }
 
-void saveFile(int carro, vector<int> caminho)
+void saveFile(int carro, vector<int> caminho, string algoritmo)
 {
-    string path = ("Arquivos/coordenadas" + to_string(carro) + ".csv");
+    string path = ("Arquivos/coordenadas" + algoritmo + to_string(carro) + ".csv");
     ofstream save(path);
     save << "x,y,no" << endl;
     for(int i = 0 ; i < caminho.size(); i++)
