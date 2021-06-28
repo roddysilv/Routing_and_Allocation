@@ -1,0 +1,8 @@
+A: Custo variado das estações por conjunto dominante mínimo.
+Alcance de 20%.
+Custo = (Custo_normal / 4) + ((Custo_normal / 8) * Dominancia_do_no)
+
+B: Custo variado randômico das estações.
+Custo = Valores sorteados de (Custo_normal / 4) até ((Custo_normal / 8) * Quantidade_de_nos).
+
+E: Usadas para o resolvedor. (CPLEX)

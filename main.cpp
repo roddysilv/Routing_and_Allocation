@@ -26,6 +26,7 @@ vector<int> swap(int a, int b,vector<int> caminho);
 int main(int argc, char *argv[])
 {
     ifstream input_file(argv[1]);
+    int algContrutivo = atoi(argv[2]);
     vector<pair<int, float>> teste[1];
     leitura(input_file);
 
@@ -42,9 +43,9 @@ int main(int argc, char *argv[])
 
     //print();
 
-    //construtivoGuloso();
-    construtivoGulosoRand();
-
+    if(algContrutivo == 1){construtivoGuloso();}
+    if(algContrutivo == 2){construtivoGulosoRand();}
+    
     //cin.ignore();
 
     return 0;
