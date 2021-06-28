@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 #include <math.h>
 #include <string>
+#include <stdlib.h>     
+#include <time.h>   
 using namespace std;
 
 vector<vector<float>> distancias;
@@ -40,7 +42,7 @@ int main(int argc, char *argv[])
 
     //print();
 
-    construtivoGuloso();
+    //construtivoGuloso();
     construtivoGulosoRand();
 
     //cin.ignore();
@@ -183,6 +185,7 @@ void construtivoGuloso()
 }
 
 void construtivoGulosoRand(){
+    srand(time(0));
     int noAtual,proxNo, auxCapacity, carros, trocasBat;
     float custoMin, auxBat, custoRota;
 
@@ -211,43 +214,34 @@ void construtivoGulosoRand(){
         carros++;
         cout <<"Rota carro #" << carros << ": " << noAtual;
 
-        while(auxCapacity > 0) // Enquanto o veículo não está cheio (a cada iteração é diminuida a capacidade de carga de acordo com a demanda do cliente).
+        int maxIt =0;
+        while(auxCapacity > 0 && maxIt < 20 && candidatos.size() > 0) // Enquanto o veículo não está cheio (a cada iteração é diminuida a capacidade de carga de acordo com a demanda do cliente).
         {
-            atualizado = false;
-            custoMin = batteryCapacity;
-            int test = 0;
-            while(test < 200)
+            int random = rand() % candidatos.size();
+            int rNo = candidatos[random];
+            //cout << random <<" "<< rNo<< endl;
+            // Verifica se a capacidade do veículo não foi excedida.
+            if( auxCapacity - nodeDemands[rNo] >= 0)
             {
-                int random = rand() % candidatos.size();
-                int rNo = candidatos[random];
-                // Verifica se a capacidade do veículo não foi excedida.
-                if( auxCapacity - nodeDemands[rNo] >= 0)
+                custoRota += distancias[noAtual][rNo];
+                candidatos.erase(candidatos.begin() + random);
+                atualizado = true;
+
+                if(auxBat-distancias[noAtual][rNo] < 0 ) // Troca de bateria.
                 {
-                    custoRota += distancias[noAtual][rNo];
-                    candidatos.erase(candidatos.begin() + random);
-                    atualizado = true;
-                    break;
-                }
-                test++;
-            }
-            if(atualizado==false) // Não encontrou próximo cliente que satisfaça as condições.
-            {
-                break; // Para o algorítmo e não adiciona mais clientes na rota.
-            }
+                    trocasBat++;
+                    auxBat = batteryCapacity;
+                }   
 
-            if(auxBat-distancias[noAtual][proxNo] < 0 ) // Troca de bateria.
-            {
-                trocasBat++;
-                auxBat = batteryCapacity;
+                auxBat -= distancias[noAtual][rNo];
+                noAtual = rNo; // Atualiza nó.
+                auxCapacity -= nodeDemands[rNo];
+                custoRota += custoMin;
+                nosVisitados.push_back(noAtual);
+                caminho.push_back(noAtual);
+                cout << "->" << noAtual;
             }
-
-            auxBat -= distancias[noAtual][proxNo];
-            noAtual = proxNo; // Atualiza nó.
-            auxCapacity -= nodeDemands[proxNo];
-            custoRota += custoMin;
-            nosVisitados.push_back(noAtual);
-            caminho.push_back(noAtual);
-            cout << "->" << noAtual;
+            maxIt++;
         }
         
         saveFile(carros, caminho); // Salva caminho percorrido pelo veículo.
