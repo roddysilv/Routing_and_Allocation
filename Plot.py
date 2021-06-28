@@ -10,19 +10,34 @@ import matplotlib.pyplot as plt
 from glob import glob
 
 
-k=1
-for rota in glob("Arquivos/coordenadas*.csv"):
-    coord = pd.read_csv(rota)
-
+# k=1
+for i in range(1,11):
+    coord = pd.read_csv("Arquivos/coordenadasGulosoRand_"+str(i)+".csv")
+    try:
+        coordOpt = pd.read_csv("Arquivos/coordenadas2opt_"+str(i)+".csv")
+        t = 0
+    except:
+        t = 1    
     x = coord['x'].values
     y = coord['y'].values
     no = coord['no'].values
     
-    # plt.figure()
-    plt.plot(x,y,'o--',label='Veículo ' + str(k))
+    xOpt = coordOpt['x'].values
+    yOpt = coordOpt['y'].values
+    noOpt = coordOpt['no'].values
+    
+    plt.figure()
+    plt.plot(x,y,'ro--',label='Veículo ' + str(i))
     plt.legend(prop={'size': 6})
     plt.xlabel("x")
     plt.ylabel("y")
-    for i in range(len(no)):
-        plt.annotate(no[i],(x[i],y[i]))
-    k+=1
+    for j in range(len(no)):
+        plt.annotate(no[j],(x[j],y[j]))
+    if (t == 0): 
+        plt.figure()
+        plt.plot(xOpt,yOpt,'bo--',label='VeículoOpt ' + str(i))
+        plt.legend(prop={'size': 6})
+        plt.xlabel("x")
+        plt.ylabel("y")
+        for j in range(len(no)):
+            plt.annotate(noOpt[j],(xOpt[j],yOpt[j]))
