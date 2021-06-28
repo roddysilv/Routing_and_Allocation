@@ -16,11 +16,14 @@
 	<bits/stdc++.h>
 	<math.h>
 
-1624726066 source:d:\engenharia\projetos\c++\grafo_ponderado\main.cpp
+1624911882 source:d:\engenharia\projetos\c++\grafo_ponderado\main.cpp
 	<iostream>
 	<bits/stdc++.h>
 	<math.h>
 	<string>
+	<stdlib.h>
+	<time.h>
+	"functions.h"
 
 1624570523 source:c:\users\rodri\google drive\projetos\c++\grafo_ponderado\main.cpp
 	<iostream>
@@ -33,4 +36,21 @@
 	<bits/stdc++.h>
 	<math.h>
 	<string>
+
+1624912039 d:\engenharia\projetos\c++\grafo_ponderado\functions.h
+	<iostream>
+	<bits/stdc++.h>
+	<math.h>
+	<string>
+	<stdlib.h>
+	<time.h>
+
+1624922431 source:d:\engenharia\projetos\c++\grafo_ponderado\functions.cpp
+	<iostream>
+	<bits/stdc++.h>
+	<math.h>
+	<string>
+	<stdlib.h>
+	<time.h>
+	"functions.h"
 
