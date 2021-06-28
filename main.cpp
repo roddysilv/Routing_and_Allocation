@@ -15,6 +15,7 @@ float distance(int x1, int y1, int x2, int y2);
 void saveFile(int carro, vector<int> caminho);
 void leitura(ifstream &input_file);
 void construtivoGuloso();
+void construtivoGulosoRand();
 void print();
 void twoOpt(vector<int> caminho);
 float custo(vector<int> caminho);
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     //print();
 
     construtivoGuloso();
+    construtivoGulosoRand();
 
     //cin.ignore();
 
@@ -213,7 +215,8 @@ void construtivoGulosoRand(){
         {
             atualizado = false;
             custoMin = batteryCapacity;
-            for(int j = 0 ; j < candidatos.size(); j++)
+            int test = 0;
+            while(test < 200)
             {
                 int random = rand() % candidatos.size();
                 int rNo = candidatos[random];
@@ -225,6 +228,7 @@ void construtivoGulosoRand(){
                     atualizado = true;
                     break;
                 }
+                test++;
             }
             if(atualizado==false) // Não encontrou próximo cliente que satisfaça as condições.
             {
@@ -244,9 +248,20 @@ void construtivoGulosoRand(){
             nosVisitados.push_back(noAtual);
             caminho.push_back(noAtual);
             cout << "->" << noAtual;
+        }
+        
+        saveFile(carros, caminho); // Salva caminho percorrido pelo veículo.
+        
+        cout << endl << "Capacidade restante: " << auxCapacity << endl;
+        cout << "Trocas de bateria: " << trocasBat << endl;
+        cout << "Capacidade restante da bateria atual: " << auxBat<<endl;
+        cout << "Custo da rota: " << custoRota;
+        cout << endl << endl;
+        
+        caminho = {0}; // Ajusta caminho para o pŕoximo veículo
+        noAtual = 0;
     }
 }
-
 void leitura(ifstream &input_file)
 {
     string line;
