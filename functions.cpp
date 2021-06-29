@@ -1,11 +1,3 @@
-#include <iostream>
-#include <bits/stdc++.h>
-#include <math.h>
-#include <string>
-#include <stdlib.h>
-#include <time.h>
-#include <locale.h>
-
 #include "functions.h"
 
 using namespace std;

@@ -1,16 +1,9 @@
-#include <iostream>
-#include <bits/stdc++.h>
-#include <math.h>
-#include <string>
-#include <stdlib.h>
-#include <time.h>
-#include <locale.h>
-
 #include "functions.h"
+/*#include "functions.cpp"*/ //Apenas Linux
 
 using namespace std;
 
-///Variáveis
+//Variáveis
 vector<vector<float>> distancias;
 vector<pair<int, int>> nodeCoords;
 vector<pair<int, int>> bssCoords;
@@ -22,12 +15,11 @@ int main(int argc, char *argv[])
 {
     ifstream input_file(argv[1]);
     int algContrutivo = atoi(argv[2]);
-    vector<pair<int, float>> teste[1];
-    #ifdef _WIN32
-        leituraWin(input_file);
-    #else
-        leitura(input_file);
-    #endif
+#ifdef _WIN32
+    leituraWin(input_file);
+#else
+    leitura(input_file);
+#endif
 
     totalDemand = accumulate(nodeDemands.begin(), nodeDemands.end(), 0);
     vehiclesNeeded = ceil((float)(totalDemand)/vehicleCapacity);

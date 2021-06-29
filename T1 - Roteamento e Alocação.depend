@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1624970722 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\main.cpp
+	"functions.h"
+
+1624912260 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\functions.h
+	<iostream>
+	<bits/stdc++.h>
+	<math.h>
+	<string>
+	<stdlib.h>
+	<time.h>
+	<locale.h>
+
