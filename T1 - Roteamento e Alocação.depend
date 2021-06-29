@@ -2,12 +2,14 @@
 1624970722 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\main.cpp
 	"functions.h"
 
-1624912260 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\functions.h
+1624972141 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\functions.h
 	<iostream>
 	<bits/stdc++.h>
 	<math.h>
 	<string>
 	<stdlib.h>
 	<time.h>
-	<locale.h>
+
+1624927281 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\functions.cpp
+	"functions.h"
 
