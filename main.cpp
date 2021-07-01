@@ -1,5 +1,5 @@
 #include "functions.h"
-/*#include "functions.cpp"*/ //Apenas Linux
+#include "functions.cpp" //Apenas Linux
 
 using namespace std;
 
@@ -38,11 +38,14 @@ int main(int argc, char *argv[])
     {
         construtivoGuloso();
     }
-    if(algContrutivo == 2)
+    else if(algContrutivo == 2)
     {
         construtivoGulosoRand();
     }
-
+    else if(algContrutivo == 3)
+    {
+        construtivoGulosoBuscaEstacao();
+    }
     //cin.ignore();
 
     return 0;

@@ -11,7 +11,7 @@ from glob import glob
 
 
 # k=1
-for i in range(1,50):
+for i in range(1,10):
     coord = pd.read_csv("Arquivos/coordenadasGuloso_"+str(i)+".csv")
     # coord = pd.read_csv("Arquivos/coordenadasGulosoRand_"+str(i)+".csv")
     try:
@@ -19,12 +19,13 @@ for i in range(1,50):
         xOpt = coordOpt['x'].values
         yOpt = coordOpt['y'].values
         noOpt = coordOpt['no'].values
-        t = 0
+        t = 1
     except:
         t = 1    
     x = coord['x'].values
     y = coord['y'].values
     no = coord['no'].values
+    estacao = coord['estacao'].values
     
     
     
@@ -34,7 +35,10 @@ for i in range(1,50):
     plt.xlabel("x")
     plt.ylabel("y")
     for j in range(len(no)):
-        plt.annotate(no[j],(x[j],y[j]))
+        if estacao[j] == 1:
+            plt.annotate(no[j],(x[j],y[j]),color='r')
+        else:
+            plt.annotate(no[j],(x[j],y[j]))
     if (t == 0): 
         plt.figure()
         plt.plot(xOpt,yOpt,'bo--',label='VeículoOpt ' + str(i))
@@ -42,4 +46,4 @@ for i in range(1,50):
         plt.xlabel("x")
         plt.ylabel("y")
         for k in range(len(noOpt)):
-            plt.annotate(noOpt[k],(xOpt[k],yOpt[k]))
+            plt.annotate(noOpt[k],(xOpt[k],yOpt[k]),color='b')
