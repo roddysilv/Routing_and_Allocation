@@ -1,6 +1,6 @@
-#include "functions.h"
+#include "auxFunc.h"
 #include "construtivos.h"
-#include "functions.cpp" 
+#include "auxFunc.cpp" 
 #include "construtivos.cpp"
 
 using namespace std;
