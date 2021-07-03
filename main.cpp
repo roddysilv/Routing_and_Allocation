@@ -1,5 +1,7 @@
 #include "functions.h"
-#include "functions.cpp" //Apenas Linux
+#include "construtivos.h"
+#include "functions.cpp" 
+#include "construtivos.cpp"
 
 using namespace std;
 
@@ -15,6 +17,7 @@ int main(int argc, char *argv[])
 {
     ifstream input_file(argv[1]);
     int algContrutivo = atoi(argv[2]);
+    float percent = stof(argv[3]);
 #ifdef _WIN32
     leituraWin(input_file);
 #else
@@ -32,21 +35,36 @@ int main(int argc, char *argv[])
     cout << "Quantidade minima de veiculos necessarios: " << vehiclesNeeded << endl;
     cout << "Quantidade de clientes: " << nodeCount - 1 << endl << endl;
 
-    //print();
-
     if(algContrutivo == 1)
     {
+        auto start = high_resolution_clock::now();
         construtivoGuloso();
+        auto stop = high_resolution_clock::now();
+        
+        auto duration = duration_cast<microseconds>(stop - start);
+
+        cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
     }
     else if(algContrutivo == 2)
     {
+        auto start = high_resolution_clock::now();
         construtivoGulosoRand();
+        auto stop = high_resolution_clock::now();
+       
+        auto duration = duration_cast<microseconds>(stop - start);
+
+        cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
     }
     else if(algContrutivo == 3)
     {
-        construtivoGulosoBuscaEstacao();
+        auto start = high_resolution_clock::now();
+        construtivoGulosoBuscaEstacao(percent);
+        auto stop = high_resolution_clock::now();
+        
+        auto duration = duration_cast<microseconds>(stop - start);
+
+        cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
     }
-    //cin.ignore();
 
     return 0;
 }
