@@ -115,10 +115,6 @@ float custo(vector<int> caminho)
     return custoRota;
 }
 
-
-
-
-
 void trocaBateria(float percent, float &auxBat, int &noAtual, vector<int> &estacoes, int &trocasBat, vector<int> &caminho, int proxNo)
 {
     if(auxBat / batteryCapacity <= percent || auxBat - distancias[noAtual][proxNo]<0)
@@ -156,7 +152,7 @@ void trocaBateria(float percent, float &auxBat, int &noAtual, vector<int> &estac
 
 void imprimeCaminho(vector<int> caminho, vector<int> estacoes)
 {
-    cout<< "0";
+    cout<< caminho[0];
     for(int i = 1; i < caminho.size(); i++)
     {
         if(find(estacoes.begin(), estacoes.end(), caminho[i]) != estacoes.end())
@@ -169,9 +165,6 @@ void imprimeCaminho(vector<int> caminho, vector<int> estacoes)
         }
     }
 }
-
-
-
 
 void leitura(ifstream &input_file)
 {
