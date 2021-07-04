@@ -25,7 +25,7 @@ void leitura(ifstream &input_file);
 void leituraWin(ifstream &input_file);
 
 void printMatrix();
-void twoOpt(vector<int> caminho,int carro);
+float twoOpt(vector<int> caminho,int carro);
 void twoOpt2(vector<int> caminho,int carro, vector<int> estacoes);
 float custo(vector<int> caminho);
 vector<int> swap(int a, int b,vector<int> caminho);

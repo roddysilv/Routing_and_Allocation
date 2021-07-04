@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void twoOpt(vector<int> caminho,int carro)
+float twoOpt(vector<int> caminho,int carro)
 {
     vector<int> estacoes;
     float cInicial = custo(caminho);
@@ -19,21 +19,23 @@ void twoOpt(vector<int> caminho,int carro)
                 {
                     caminho = novoCaminho;
                     aprimorado = true;
-                }   
+                }
             }
         }
     }
 
     float auxBat = batteryCapacity;
-    for(int i = 0 ; i < caminho.size()-1; i++){
-        if(auxBat - distancias[caminho[i]][caminho[i+1]]<0){
+    for(int i = 0 ; i < caminho.size()-1; i++)
+    {
+        if(auxBat - distancias[caminho[i]][caminho[i+1]]<0)
+        {
             estacoes.push_back(caminho[i]);
             auxBat = batteryCapacity;
         }
         auxBat -= distancias[caminho[i]][caminho[i+1]];
     }
 
-    cout << "2opt:" << endl;
+    cout << "Rota carro #" << carro << ":";
     if(cInicial == custo(caminho))
     {
         cout << "Não houve melhoria para esta rota." << endl <<endl;
@@ -41,17 +43,20 @@ void twoOpt(vector<int> caminho,int carro)
     else
     {
         imprimeCaminho(caminho,estacoes);
-        cout << " Novo custo: " << custo(caminho) << endl;
+        cout << endl<<" Novo custo: " << custo(caminho) << endl;
         cout << endl;
         saveFile(carro,caminho,"2opt",estacoes);
     }
+    return custo(caminho);
 }
 
 void twoOpt2(vector<int> caminho,int carro, vector<int> estacoes)
 {
     int est = 0;
-    for(int i = 1; i< caminho.size()-1;i++){
-        if(find(estacoes.begin(), estacoes.end(), caminho[i]) != estacoes.end()){
+    for(int i = 1; i< caminho.size()-1; i++)
+    {
+        if(find(estacoes.begin(), estacoes.end(), caminho[i]) != estacoes.end())
+        {
             est++;
         }
     }
@@ -71,7 +76,7 @@ void twoOpt2(vector<int> caminho,int carro, vector<int> estacoes)
                 {
                     caminho = novoCaminho;
                     aprimorado = true;
-                }   
+                }
             }
         }
     }

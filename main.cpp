@@ -37,13 +37,7 @@ int main(int argc, char *argv[])
 
     if(algContrutivo == 1)
     {
-        auto start = high_resolution_clock::now();
         construtivoGuloso();
-        auto stop = high_resolution_clock::now();
-        
-        auto duration = duration_cast<microseconds>(stop - start);
-
-        cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
     }
     else if(algContrutivo == 2)
     {

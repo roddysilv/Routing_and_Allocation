@@ -33,8 +33,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="functions.cpp" />
-		<Unit filename="functions.h" />
+		<Unit filename="auxFunc.cpp" />
+		<Unit filename="auxFunc.h" />
+		<Unit filename="construtivos.cpp" />
+		<Unit filename="construtivos.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

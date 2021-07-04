@@ -3,8 +3,12 @@
 
 void construtivoGuloso()
 {
+    auto start = high_resolution_clock::now();
+
     int noAtual,proxNo, auxCapacity, carros, trocasBat;
-    float custoMin, auxBat, custoTotal = 0;
+    float custoMin, auxBat, custoTotal = 0,custoTotalBusca = 0;
+
+    vector<vector<int>> rotas;
 
     vector<int> nosVisitados;
     vector<int> caminho;
@@ -77,21 +81,38 @@ void construtivoGuloso()
         cout << "Custo da rota: " << custo(caminho);
         cout << endl << endl;
         estacoes.clear();
-        
-        twoOpt(caminho, carros);
 
         custoTotal+=custo(caminho);
+        rotas.push_back(caminho);
+
         caminho = {nodeBase}; // Ajusta caminho para o pŕoximo veículo
         noAtual = nodeBase;
     }
-    cout << "Custo Total: " << custoTotal << endl << endl;
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
+
+    start = high_resolution_clock::now();
+    cout << "2opt" << endl << endl;
+    for(int i = 0; i< rotas.size(); i++)
+    {
+        custoTotalBusca += twoOpt(rotas[i], i);
+    }
+    stop = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(stop - start);
+    cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
+
+    cout << "Custo Total: " << custoTotal << endl;
+    cout << "Custo Total Busca Local: " << custoTotalBusca << endl << endl;
 }
 
 void construtivoGulosoRand()
 {
     srand(time(0));
     int noAtual,proxNo, auxCapacity, carros, trocasBat;
-    float custoMin, auxBat, custoTotal = 0;
+    float custoMin, auxBat, custoTotal = 0,custoTotalBusca = 0;
+
+    vector<vector<int>> rotas;
 
     vector<int> nosVisitados;
     vector<int> caminho;
@@ -164,13 +185,17 @@ void construtivoGulosoRand()
         cout << "Custo da rota: " << custo(caminho);
         cout << endl << endl;
 
-        twoOpt(caminho, carros);
-
         custoTotal+=custo(caminho);
+        rotas.push_back(caminho);
         caminho = {nodeBase}; // Ajusta caminho para o pŕoximo veículo
         noAtual = nodeBase;
     }
-    cout << "Custo Total: " << custoTotal << endl << endl;
+    for(int i = 0; i< rotas.size(); i++)
+    {
+        custoTotalBusca += twoOpt(rotas[i], carros);
+    }
+    cout << "Custo Total: " << custoTotal << endl;
+    cout << "Custo Total Busca Local: " << custoTotalBusca << endl << endl;
 }
 
 void construtivoGulosoBuscaEstacao(float percent)
