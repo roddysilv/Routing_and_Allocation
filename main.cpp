@@ -1,6 +1,6 @@
 #include "auxFunc.h"
 #include "construtivos.h"
-#include "auxFunc.cpp" 
+#include "auxFunc.cpp"
 #include "construtivos.cpp"
 
 using namespace std;
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
     cout << "INFO:"<<endl;
     cout << endl << "Capacidade da bateria do veiculo: " << batteryCapacity << endl ;
-    cout << "Custo da troca de bateria: " << bssCost << endl;
+    cout << "Custo de Criacao de Estacao: " << bssCost << endl;
     cout << "Capacidade de transporte do veiculo: " << vehicleCapacity << endl ;
     cout << "Demanda total: " << totalDemand << endl;
     cout << "Quantidade minima de veiculos necessarios: " << vehiclesNeeded << endl;
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         auto start = high_resolution_clock::now();
         construtivoGulosoRand();
         auto stop = high_resolution_clock::now();
-       
+
         auto duration = duration_cast<microseconds>(stop - start);
 
         cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         auto start = high_resolution_clock::now();
         construtivoGulosoBuscaEstacao(percent);
         auto stop = high_resolution_clock::now();
-        
+
         auto duration = duration_cast<microseconds>(stop - start);
 
         cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;

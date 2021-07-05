@@ -5,7 +5,7 @@ void construtivoGuloso()
 {
     auto start = high_resolution_clock::now();
 
-    int noAtual,proxNo, auxCapacity, carros, trocasBat;
+    int noAtual,proxNo, auxCapacity, carros, trocasBat, est=0;
     float custoMin, auxBat, custoTotal = 0,custoTotalBusca = 0;
 
     vector<vector<int>> rotas;
@@ -72,6 +72,7 @@ void construtivoGuloso()
             trocasBat++;
             auxBat = batteryCapacity;
         }
+        est+=trocasBat;
         caminho.push_back(nodeBase);
         saveFile(carros, caminho, "Guloso",estacoes); // Salva caminho percorrido pelo veículo.
         imprimeCaminho(caminho, estacoes);
@@ -82,7 +83,7 @@ void construtivoGuloso()
         cout << endl << endl;
         estacoes.clear();
 
-        custoTotal+=custo(caminho);
+        custoTotal+=custo(caminho) + (trocasBat * bssCost);
         rotas.push_back(caminho);
 
         caminho = {nodeBase}; // Ajusta caminho para o pŕoximo veículo
@@ -102,14 +103,17 @@ void construtivoGuloso()
     duration = duration_cast<microseconds>(stop - start);
     cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
 
-    cout << "Custo Total: " << custoTotal << endl;
+    cout << "Custo Total: " << custoTotal  << endl;
+    cout << "Estacoes criadas: " << est << endl;
     cout << "Custo Total Busca Local: " << custoTotalBusca << endl << endl;
 }
 
 void construtivoGulosoRand()
 {
+    auto start = high_resolution_clock::now();
+
     srand(time(0));
-    int noAtual,proxNo, auxCapacity, carros, trocasBat;
+    int noAtual,proxNo, auxCapacity, carros, trocasBat,est=0;
     float custoMin, auxBat, custoTotal = 0,custoTotalBusca = 0;
 
     vector<vector<int>> rotas;
@@ -177,31 +181,49 @@ void construtivoGulosoRand()
             auxBat = batteryCapacity;
         }
         caminho.push_back(nodeBase);
-        saveFile(carros, caminho, "Guloso",estacoes); // Salva caminho percorrido pelo veículo.
+        saveFile(carros, caminho, "GulosoRand",estacoes); // Salva caminho percorrido pelo veículo.
         imprimeCaminho(caminho, estacoes);
         cout << endl << "Capacidade restante: " << auxCapacity << endl;
         cout << "Capacidade restante da bateria atual: " << auxBat<<endl;
         cout << "Trocas de bateria: " << trocasBat << endl;
         cout << "Custo da rota: " << custo(caminho);
         cout << endl << endl;
+        estacoes.clear();
 
-        custoTotal+=custo(caminho);
+        custoTotal+=custo(caminho)+ (trocasBat * bssCost);
         rotas.push_back(caminho);
+
         caminho = {nodeBase}; // Ajusta caminho para o pŕoximo veículo
         noAtual = nodeBase;
+        est += trocasBat;
     }
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
+
+    start = high_resolution_clock::now();
+    cout << "2opt" << endl << endl;
     for(int i = 0; i< rotas.size(); i++)
     {
         custoTotalBusca += twoOpt(rotas[i], carros);
     }
-    cout << "Custo Total: " << custoTotal << endl;
+    stop = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(stop - start);
+    cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
+
+    cout << "Custo Total: " << custoTotal  << endl;
+    cout << "Estacoes criadas: " << est << endl;
     cout << "Custo Total Busca Local: " << custoTotalBusca << endl << endl;
 }
 
 void construtivoGulosoBuscaEstacao(float percent)
 {
+    auto start = high_resolution_clock::now();
+
     int noAtual,proxNo, auxCapacity, carros, trocasBat;
-    float custoMin, auxBat, custoTotal = 0;
+    float custoMin, auxBat, custoTotal = 0, custoTotalBusca = 0;
+
+    vector<vector<int>> rotas;
 
     vector<int> estacoes;
     vector<int> nosVisitados;
@@ -255,7 +277,7 @@ void construtivoGulosoBuscaEstacao(float percent)
             caminho.push_back(noAtual);
         }
         trocaBateria(percent, auxBat, noAtual, estacoes,trocasBat,caminho,0);
-        caminho.push_back(0);
+        caminho.push_back(nodeBase);
         saveFile(carros, caminho, "Guloso",estacoes); // Salva caminho percorrido pelo veículo.
         imprimeCaminho(caminho, estacoes);
         cout << endl << "Capacidade restante: " << auxCapacity << endl;
@@ -264,13 +286,27 @@ void construtivoGulosoBuscaEstacao(float percent)
         cout << "Custo da rota: " << custo(caminho);
         cout << endl << endl;
 
-        //twoOpt(caminho, carros,estacoes);
-
-        custoTotal+=custo(caminho);
-        caminho = {0}; // Ajusta caminho para o pŕoximo veículo
-        noAtual = 0;
+        custoTotal+=custo(caminho)+ (estacoes.size() * bssCost);
+        rotas.push_back(caminho);
+        caminho = {nodeBase}; // Ajusta caminho para o pŕoximo veículo
+        noAtual = nodeBase;
     }
-    cout << "Custo Total das Rotas: " << custoTotal << endl;
-    cout << "Estacoes criadas: " << estacoes.size() << endl ;
-    cout << "Custo Total: " << custoTotal + estacoes.size()<< endl<< endl;
+
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
+
+    start = high_resolution_clock::now();
+    cout << "2opt" << endl << endl;
+    for(int i = 0; i< rotas.size(); i++)
+    {
+        custoTotalBusca += twoOpt2(rotas[i], i, estacoes);
+    }
+    stop = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(stop - start);
+    cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
+
+    cout << "Custo Total: " << custoTotal << endl;
+    cout << "Estacoes Criadas: " << estacoes.size() << endl;
+    cout << "Custo Total Busca Local: " << custoTotalBusca << endl << endl;
 }

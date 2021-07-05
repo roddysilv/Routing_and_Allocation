@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1624970722 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\main.cpp
-	"functions.h"
+1625431026 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\main.cpp
+	"auxFunc.h"
+	"construtivos.h"
 
 1624972141 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\functions.h
 	<iostream>
@@ -12,4 +13,28 @@
 
 1624927281 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\functions.cpp
 	"functions.h"
+
+1625431355 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\auxfunc.cpp
+	"auxFunc.h"
+
+1625431037 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\auxfunc.h
+	<iostream>
+	<bits/stdc++.h>
+	<math.h>
+	<string>
+	<stdlib.h>
+	<time.h>
+	<chrono>
+
+1625432308 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\construtivos.cpp
+	"auxFunc.h"
+	"construtivos.h"
+
+1625431014 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\construtivos.h
+	<iostream>
+	<bits/stdc++.h>
+	<math.h>
+	<string>
+	<stdlib.h>
+	<time.h>
 

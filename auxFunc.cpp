@@ -2,7 +2,7 @@
 
 using namespace std;
 
-float twoOpt(vector<int> caminho,int carro)
+float twoOpt(vector<int> &caminho,int carro)
 {
     vector<int> estacoes;
     float cInicial = custo(caminho);
@@ -35,63 +35,63 @@ float twoOpt(vector<int> caminho,int carro)
         auxBat -= distancias[caminho[i]][caminho[i+1]];
     }
 
-    cout << "Rota carro #" << carro << ":";
+    cout << "Rota carro #" << carro << ": ";
     if(cInicial == custo(caminho))
     {
-        cout << "Não houve melhoria para esta rota." << endl <<endl;
+        cout << "Não houve melhoria para esta rota. ";
+        imprimeCaminho(caminho,estacoes);
+        cout << endl <<endl;
+        saveFile(carro,caminho,"2opt",estacoes);
     }
     else
     {
         imprimeCaminho(caminho,estacoes);
-        cout << endl<<" Novo custo: " << custo(caminho) << endl;
+        cout << endl<<"Novo custo: " << custo(caminho) << endl;
         cout << endl;
         saveFile(carro,caminho,"2opt",estacoes);
     }
-    return custo(caminho);
+    return custo(caminho) + estacoes.size() * bssCost;
 }
 
-void twoOpt2(vector<int> caminho,int carro, vector<int> estacoes)
+float twoOpt2(vector<int> caminho,int carro, vector<int> estacoes)
 {
-    int est = 0;
-    for(int i = 1; i< caminho.size()-1; i++)
+    vector<vector<int>> ss;
+    vector<int> aux;
+    for(int i=0; i<caminho.size(); i++)
     {
-        if(find(estacoes.begin(), estacoes.end(), caminho[i]) != estacoes.end())
+        if(find(estacoes.begin(), estacoes.end(), caminho[i]) == estacoes.end())
         {
-            est++;
-        }
-    }
-    cout << est;
-
-    float cInicial = custo(caminho);
-    bool aprimorado = true;
-    while (aprimorado)
-    {
-        aprimorado = false;
-        for(int i = 1; i < caminho.size() - 2; i++)
-        {
-            for(int j = i + 1; j < caminho.size()-1; j++)
-            {
-                vector<int> novoCaminho = swap(i,j,caminho);
-                if ( custo(novoCaminho) < custo(caminho))
-                {
-                    caminho = novoCaminho;
-                    aprimorado = true;
-                }
+            aux.push_back(caminho[i]);
+            if(i==caminho.size()-1){
+                ss.push_back(aux);
             }
         }
+        else
+        {
+            aux.push_back(caminho[i]);
+            ss.push_back(aux);
+            aux = {caminho[i]};
+        }
     }
-    cout << "2opt:" << endl;
-    if(cInicial == custo(caminho))
+
+    float custo = 0;
+
+    for(int i=0; i<ss.size(); i++)
     {
-        cout << "Não houve melhoria para esta rota." << endl <<endl;
+        custo += twoOpt(ss[i],carro);
     }
-    else
+
+    aux = {ss[0][0]};
+    for(int i=0; i<ss.size(); i++)
     {
-        imprimeCaminho(caminho,estacoes);
-        cout << " Novo custo: " << custo(caminho) << endl;
-        cout << endl;
-        saveFile(carro,caminho,"2opt",estacoes);
+        for(int j=1; j<ss[i].size(); j++)
+        {
+            aux.push_back(ss[i][j]);
+        }
     }
+    imprimeCaminho(aux,estacoes);
+    cout << endl;
+    return custo;
 }
 
 vector<int> swap(int a, int b,vector<int> caminho)
@@ -329,6 +329,7 @@ void leitura(ifstream &input_file)
         }
         distancias.push_back(auxV);
     }
+    bssCost = ceil(batteryCapacity) / 2;
     batteryCapacity = 1.2 * batteryCapacity;
 }
 
@@ -490,6 +491,7 @@ void leituraWin(ifstream &input_file)
         }
         distancias.push_back(auxV);
     }
+    bssCost = ceil(batteryCapacity) / 2;
     batteryCapacity = 1.2 * batteryCapacity;
 }
 
