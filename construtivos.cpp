@@ -205,7 +205,7 @@ void construtivoGulosoRand()
     cout << "2opt" << endl << endl;
     for(int i = 0; i< rotas.size(); i++)
     {
-        custoTotalBusca += twoOpt(rotas[i], carros);
+        custoTotalBusca += twoOpt(rotas[i], i+1);
     }
     stop = high_resolution_clock::now();
     duration = duration_cast<microseconds>(stop - start);

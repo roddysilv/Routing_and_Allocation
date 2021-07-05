@@ -10,10 +10,11 @@ import matplotlib.pyplot as plt
 from glob import glob
 
 
-# k=1
-for i in range(1,10):
-    coord = pd.read_csv("Arquivos/coordenadasGuloso_"+str(i)+".csv")
+k=0
+for i in range(1,12):
+    # coord = pd.read_csv("Arquivos/coordenadasGuloso_"+str(i)+".csv")
     # coord = pd.read_csv("Arquivos/coordenadasGulosoRand_"+str(i)+".csv")
+    coord = pd.read_csv("Arquivos/coordenadas2opt_"+str(i)+".csv")
     try:
         coordOpt = pd.read_csv("Arquivos/coordenadas2opt_"+str(i)+".csv")
         xOpt = coordOpt['x'].values
@@ -29,7 +30,7 @@ for i in range(1,10):
     
     
     
-    plt.figure()
+    # plt.figure()
     plt.plot(x,y,'o--',label='Veículo ' + str(i))
     plt.legend(prop={'size': 6})
     plt.xlabel("x")
@@ -40,7 +41,7 @@ for i in range(1,10):
         else:
             plt.annotate(no[j],(x[j],y[j]))
     if (t == 0): 
-        plt.figure()
+        # plt.figure()
         plt.plot(xOpt,yOpt,'bo--',label='VeículoOpt ' + str(i))
         plt.legend(prop={'size': 6})
         plt.xlabel("x")
