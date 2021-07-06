@@ -278,7 +278,7 @@ void construtivoGulosoBuscaEstacao(float percent)
         }
         trocaBateria(percent, auxBat, noAtual, estacoes,trocasBat,caminho,0);
         caminho.push_back(nodeBase);
-        saveFile(carros, caminho, "Guloso",estacoes); // Salva caminho percorrido pelo veículo.
+        saveFile(carros, caminho, "GulosoBusca",estacoes); // Salva caminho percorrido pelo veículo.
         imprimeCaminho(caminho, estacoes);
         cout << endl << "Capacidade restante: " << auxCapacity << endl;
         cout << "Capacidade restante da bateria atual: " << auxBat<<endl;

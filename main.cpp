@@ -1,7 +1,9 @@
 #include "auxFunc.h"
 #include "construtivos.h"
-#include "auxFunc.cpp"
-#include "construtivos.cpp"
+#include "script.h"
+//#include "auxFunc.cpp"
+//#include "construtivos.cpp"
+//#include "script.cpp"
 
 using namespace std;
 
@@ -15,14 +17,14 @@ float batteryCapacity;
 
 int main(int argc, char *argv[])
 {
-    ifstream input_file(argv[1]);
+    /*ifstream input_file(argv[1]);
     int algContrutivo = atoi(argv[2]);
     float percent = stof(argv[3]);
-#ifdef _WIN32
+    #ifdef _WIN32
     leituraWin(input_file);
-#else
+    #else
     leitura(input_file);
-#endif
+    #endif
 
     totalDemand = accumulate(nodeDemands.begin(), nodeDemands.end(), 0);
     vehiclesNeeded = ceil((float)(totalDemand)/vehicleCapacity);
@@ -58,7 +60,9 @@ int main(int argc, char *argv[])
         auto duration = duration_cast<microseconds>(stop - start);
 
         cout << "Duracao da execucao: " << duration.count() << " microsegundos" << endl << endl;
-    }
+    }*/
+
+    run();
 
     return 0;
 }

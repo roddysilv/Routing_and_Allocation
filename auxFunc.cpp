@@ -62,7 +62,8 @@ float twoOpt2(vector<int> caminho,int carro, vector<int> estacoes)
         if(find(estacoes.begin(), estacoes.end(), caminho[i]) == estacoes.end())
         {
             aux.push_back(caminho[i]);
-            if(i==caminho.size()-1){
+            if(i==caminho.size()-1)
+            {
                 ss.push_back(aux);
             }
         }
@@ -90,6 +91,8 @@ float twoOpt2(vector<int> caminho,int carro, vector<int> estacoes)
         }
     }
     imprimeCaminho(aux,estacoes);
+    saveFile(carro+1,aux,"OptGulosoBusca",estacoes);
+
     cout << endl;
     return custo;
 }

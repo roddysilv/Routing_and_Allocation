@@ -14,7 +14,9 @@ k=0
 for i in range(1,12):
     # coord = pd.read_csv("Arquivos/coordenadasGuloso_"+str(i)+".csv")
     # coord = pd.read_csv("Arquivos/coordenadasGulosoRand_"+str(i)+".csv")
-    coord = pd.read_csv("Arquivos/coordenadas2opt_"+str(i)+".csv")
+    # coord = pd.read_csv("Arquivos/coordenadas2opt_"+str(i)+".csv")
+    # coord = pd.read_csv("Arquivos/coordenadasOptGulosoBusca_"+str(i)+".csv")
+    coord = pd.read_csv("Arquivos/coordenadasGulosoBusca_"+str(i)+".csv")
     try:
         coordOpt = pd.read_csv("Arquivos/coordenadas2opt_"+str(i)+".csv")
         xOpt = coordOpt['x'].values

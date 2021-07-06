@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1625431026 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\main.cpp
+1625529695 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\main.cpp
 	"auxFunc.h"
 	"construtivos.h"
+	"scriptBesta.h"
 
 1624972141 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\functions.h
 	<iostream>
@@ -14,10 +15,10 @@
 1624927281 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\functions.cpp
 	"functions.h"
 
-1625431355 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\auxfunc.cpp
+1625529695 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\auxfunc.cpp
 	"auxFunc.h"
 
-1625431037 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\auxfunc.h
+1625502808 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\auxfunc.h
 	<iostream>
 	<bits/stdc++.h>
 	<math.h>
@@ -26,15 +27,36 @@
 	<time.h>
 	<chrono>
 
-1625432308 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\construtivos.cpp
+1625502723 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\construtivos.cpp
 	"auxFunc.h"
 	"construtivos.h"
 
-1625431014 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\construtivos.h
+1625432949 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\construtivos.h
 	<iostream>
 	<bits/stdc++.h>
 	<math.h>
 	<string>
 	<stdlib.h>
 	<time.h>
+
+1625502842 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\auxfunc.cpp
+	"auxFunc.h"
+
+1625502723 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\construtivos.cpp
+	"auxFunc.h"
+	"construtivos.h"
+
+1625529668 source:d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\scriptbesta.cpp
+	"auxFunc.h"
+	"construtivos.h"
+	"scriptBesta.h"
+
+1625529695 d:\engenharia\matérias\inteligência computacional\trabalhos\t1 - roteamento e alocação\scriptbesta.h
+	<iostream>
+	<bits/stdc++.h>
+	<math.h>
+	<string>
+	<stdlib.h>
+	<time.h>
+	<chrono>
 
